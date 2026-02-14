@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ItaliaViva Travel — Viaggi in Italia</title>
+  <meta name="description" content="Scopri destinazioni, itinerari e prenota il tuo viaggio in Italia in pochi click." />
+  <link rel="stylesheet" href="assets/css/styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <a class="logo" href="#top" aria-label="ItaliaViva Travel">
+      <span class="logo-mark">🇮🇹</span>
+      <span class="logo-text">ItaliaViva Travel</span>
+    </a>
+
+    <nav class="nav" aria-label="Navigazione principale">
+      <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navMenu">
+        Menu
+      </button>
+      <div class="nav-menu" id="navMenu">
+        <a href="#destinazioni">Destinazioni</a>
+        <a href="#itinerari">Itinerari</a>
+        <a href="#come-funziona">Come funziona</a>
+        <a href="#prenota" class="btn btn-small">Prenota</a>
+      </div>
+    </nav>
+  </header>
+
+  <main id="top">
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-inner">
+        <div class="hero-copy">
+          <h1>Il tuo viaggio in Italia, progettato bene.</h1>
+          <p>
+            Seleziona le destinazioni, costruisci l’itinerario e invia la prenotazione.
+            Nessun fronzolo: solo una UX chiara, veloce, pronta per andare online.
+          </p>
+          <div class="hero-actions">
+            <a class="btn" href="#destinazioni">Esplora destinazioni</a>
+            <a class="btn btn-ghost" href="#prenota">Prenota ora</a>
+          </div>
+
+          <div class="hero-badges" aria-label="Punti di forza">
+            <span class="badge">🍝 Enogastronomia</span>
+            <span class="badge">🏛️ Arte & Cultura</span>
+            <span class="badge">🏞️ Natura</span>
+            <span class="badge">🚆 Spostamenti smart</span>
+          </div>
+        </div>
+
+        <div class="hero-card">
+          <h2 class="card-title">Preventivo rapido</h2>
+          <p class="muted">
+            Scegli 2–4 tappe e una durata: il sito genera una stima indicativa e un riepilogo prenotazione.
+          </p>
+
+          <div class="quick-quote">
+            <label class="label" for="days">Giorni</label>
+            <input id="days" type="number" min="2" max="21" value="7" />
+
+            <label class="label" for="travelStyle">Stile viaggio</label>
+            <select id="travelStyle">
+              <option value="classic">Classico</option>
+              <option value="food">Food & Wine</option>
+              <option value="nature">Natura</option>
+              <option value="budget">Budget</option>
+            </select>
+
+            <button class="btn btn-full" id="buildQuoteBtn">Crea stima</button>
+
+            <div class="quote-result" id="quoteResult" aria-live="polite"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DESTINAZIONI -->
+    <section class="section" id="destinazioni">
+      <div class="section-head">
+        <h2>Destinazioni</h2>
+        <p class="muted">Filtra per interessi e aggiungi tappe all’itinerario.</p>
+      </div>
+
+      <div class="filters">
+        <input id="search" class="input" type="search" placeholder="Cerca (es. Roma, mare, Toscana)..." />
+        <select id="tagFilter" class="input">
+          <option value="all">Tutti i temi</option>
+          <option value="citta">Città</option>
+          <option value="mare">Mare</option>
+          <option value="natura">Natura</option>
+          <option value="arte">Arte</option>
+          <option value="food">Food</option>
+        </select>
+        <button class="btn btn-ghost" id="resetFilters">Reset</button>
+      </div>
+
+      <div class="grid" id="destinationsGrid" aria-live="polite"></div>
+    </section>
+
+    <!-- ITINERARI -->
+    <section class="section alt" id="itinerari">
+      <div class="section-head">
+        <h2>Il tuo itinerario</h2>
+        <p class="muted">Aggiungi tappe dalle destinazioni qui sopra. Poi scegli le date e prenota.</p>
+      </div>
+
+      <div class="itinerary">
+        <div class="itinerary-left">
+          <div class="card">
+            <h3>Tap <span class="pill" id="stopsCount">0</span></h3>
+            <div id="itineraryList" class="itinerary-list">
+              <p class="muted">Nessuna tappa. Aggiungine almeno 2 per una proposta sensata.</p>
+            </div>
+            <div class="itinerary-actions">
+              <button class="btn btn-ghost" id="clearItinerary">Svuota</button>
+              <button class="btn" id="useItineraryInBooking">Usa per prenotare</button>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>Stima indicativa</h3>
+            <p class="muted">È una stima “da landing”. Collegando un backend puoi fare pricing reale.</p>
+            <div class="pricing" id="pricingBox">
+              <div class="pricing-row">
+                <span>Durata</span>
+                <strong id="pricingDays">—</strong>
+              </div>
+              <div class="pricing-row">
+                <span>Stile</span>
+                <strong id="pricingStyle">—</strong>
+              </div>
+              <div class="pricing-row">
+                <span>Range</span>
+                <strong id="pricingRange">—</strong>
+              </div>
+              <div class="pricing-row">
+                <span>Note</span>
+                <strong id="pricingNotes">—</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="itinerary-right">
+          <div class="card">
+            <h3>Contenuti utili</h3>
+            <ul class="list">
+              <li><strong>Quando andare</strong>: primavera e inizio autunno = top.</li>
+              <li><strong>Treni</strong>: ottimi su asse Milano–Roma–Napoli.</li>
+              <li><strong>Auto</strong>: consigliata per borghi e natura.</li>
+              <li><strong>Cibo</strong>: prenota in anticipo nei posti “piccoli ma famosi”.</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h3>Mini-guida</h3>
+            <p class="muted">
+              Se vuoi trasformarlo in un progetto serio: aggiungi blog, SEO, CMS (es. Decap/Netlify),
+              e un form che salva su Google Sheets o su un DB.
+            </p>
+            <a class="btn btn-full btn-ghost" href="#prenota">Vai alla prenotazione</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- COME FUNZIONA -->
+    <section class="section" id="come-funziona">
+      <div class="section-head">
+        <h2>Come funziona</h2>
+      </div>
+
+      <div class="steps">
+        <div class="step card">
+          <h3>1) Scegli</h3>
+          <p class="muted">Filtra e seleziona 2–4 destinazioni.</p>
+        </div>
+        <div class="step card">
+          <h3>2) Componi</h3>
+          <p class="muted">Il sito crea un riepilogo con stima indicativa.</p>
+        </div>
+        <div class="step card">
+          <h3>3) Prenota</h3>
+          <p class="muted">Invia la richiesta: pronta per essere collegata a un backend.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRENOTAZIONE -->
+    <section class="section alt" id="prenota">
+      <div class="section-head">
+        <h2>Prenota il viaggio</h2>
+        <p class="muted">Compila. Il sito salva la richiesta in locale e mostra un riepilogo.</p>
+      </div>
+
+      <div class="booking">
+        <form class="card form" id="bookingForm">
+          <div class="form-row">
+            <div class="form-field">
+              <label class="label" for="fullName">Nome e cognome</label>
+              <input class="input" id="fullName" name="fullName" autocomplete="name" required />
+            </div>
+            <div class="form-field">
+              <label class="label" for="email">Email</label>
+              <input class="input" id="email" name="email" type="email" autocomplete="email" required />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-field">
+              <label class="label" for="startDate">Data inizio</label>
+              <input class="input" id="startDate" name="startDate" type="date" required />
+            </div>
+            <div class="form-field">
+              <label class="label" for="endDate">Data fine</label>
+              <input class="input" id="endDate" name="endDate" type="date" required />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-field">
+              <label class="label" for="people">Persone</label>
+              <input class="input" id="people" name="people" type="number" min="1" max="12" value="2" required />
+            </div>
+            <div class="form-field">
+              <label class="label" for="budget">Budget indicativo (€)</label>
+              <input class="input" id="budget" name="budget" type="number" min="200" step="50" placeholder="es. 1200" />
+            </div>
+          </div>
+
+          <div class="form-field">
+            <label class="label" for="selectedStops">Tappe selezionate</label>
+            <textarea class="input textarea" id="selectedStops" name="selectedStops" rows="3" placeholder="Seleziona tappe sopra oppure scrivile qui..."></textarea>
+            <p class="hint">Suggerimento: premi “Usa per prenotare” nella sezione itinerario.</p>
+          </div>
+
+          <div class="form-field">
+            <label class="label" for="notes">Note (hotel, treni, preferenze)</label>
+            <textarea class="input textarea" id="notes" name="notes" rows="4" placeholder="Es: preferisco agriturismi, niente aerei, degustazioni vino..."></textarea>
+          </div>
+
+          <button class="btn btn-full" type="submit">Invia richiesta</button>
+          <p class="hint muted">
+            Questo è un template statico: l’invio è simulato. Puoi collegarlo a Netlify / Formspree in 5 minuti.
+          </p>
+        </form>
+
+        <aside class="card summary" id="bookingSummary" aria-live="polite">
+          <h3>Riepilogo</h3>
+          <p class="muted">Dopo l’invio vedrai qui i dettagli salvati.</p>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="muted">© <span id="year"></span> ItaliaViva Travel — demo per GitHub Pages</p>
+      <div class="footer-links">
+        <a href="#top">Torna su</a>
+        <a href="#prenota">Prenota</a>
+      </div>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true"></div>
+
+  <script src="assets/js/app.js"></script>
+</body>
+</html>
